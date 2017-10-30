@@ -1,6 +1,6 @@
 
-var player1Controls =[87, 83, 68, 65];
-var player2Controls =[38, 40, 39, 37];
+var player1Controls = [87, 83, 68, 65];
+var player2Controls = [38, 40, 39, 37];
 
 window.onload = function(){
 
@@ -12,20 +12,24 @@ window.onload = function(){
   var ctx = canvas.getContext('2d');
   ctx.canvas.width = window.innerWidth;
   ctx.canvas.height = window.innerHeight;
+  var players = [];
   var player1 = new Player (ctx, keyPressed, player1Controls);
   var player2 = new Player (ctx, keyPressed, player2Controls);
 
   //Make Board
   var board = new Board(ctx);
   //Make players list
-  var players = [];
   players.push(player1);
   players.push(player2);
+
+  //Initialize Game
+  var game = new Game(players);
 
   //Board Time!
   setInterval(function(){
     playerControls(keyPressed, player1, player2);
     board.update(players);
+    game.isOverlapping();
   }, 1000/24);
 
   //Métodos para coger las teclas en función de los jugadores

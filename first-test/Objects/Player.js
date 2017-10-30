@@ -3,8 +3,8 @@ function Player(ctx, keysPressed){
   this.keysPressed = keysPressed;
   this.x = Math.random() * 500;
   this.y = Math.random() * 500;
-  this.vx = 10;
-  this.vy = 10;
+  this.vx = 0;
+  this.vy = 0;
   this.radius = 30;
   this.color = '#' + (Math.floor(Math.random() * 16581375)).toString(16);
   this.buffer;
@@ -19,18 +19,22 @@ Player.prototype.draw = function(){
 }
 
 Player.prototype.moveUp = function(){
+  if(this.vy < 10)this.vy += 1;
   this.y -= this.vy;
 }
 
 Player.prototype.moveRight = function(){
+  if(this.vx < 10)this.vx += 1;
   this.x += this.vx;
 }
 
 Player.prototype.moveDown = function(){
+  if(this.vy < 10)this.vy += 1;
   this.y += this.vy;
 }
 
 Player.prototype.moveLeft = function(){
+  if(this.vx < 10)this.vx += 1;
   this.x -= this.vx;
 }
 
