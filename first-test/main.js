@@ -27,12 +27,10 @@ window.onload = function(){
     playerControls(keyPressed, player1, player2);
     board.update(players);
   }, 1000/24);
-  //setInterval(playerControls(keyPressed, player1, player2), 30);
 
   //Métodos para coger las teclas en función de los jugadores
   document.onkeydown = function(e){
     keyPressed[e.keyCode] = true;
-    //playerControls(keyPressed, player1, player2);
   }
 
   document.onkeyup = function(e){
@@ -46,10 +44,12 @@ function playerControls (keyPressed, player1, player2) {
   if(keyPressed[83])player1.moveDown();
   if(keyPressed[68])player1.moveRight();
   if(keyPressed[65])player1.moveLeft();
+  if(keyPressed[32])player1.dash();
 
   //Player 2
   if(keyPressed[38])player2.moveUp();
   if(keyPressed[40])player2.moveDown();
   if(keyPressed[39])player2.moveRight();
   if(keyPressed[37])player2.moveLeft();
+  if(keyPressed[96])player2.dash();
 }
