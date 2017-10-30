@@ -1,7 +1,8 @@
-function Player(ctx){
+function Player(ctx, keysPressed){
   this.ctx = ctx;
-  this.x = Math.random() * 200;
-  this.y = Math.random() * 200;
+  this.keysPressed = keysPressed;
+  this.x = Math.random() * 500;
+  this.y = Math.random() * 500;
   this.vx = 0;
   this.vy = 0;
   this.radius = 30;
@@ -18,28 +19,16 @@ Player.prototype.draw = function(){
 
 Player.prototype.moveUp = function(){
   this.y -= 10;
-  //if(this.y > this.ctx.canvas.height || this.y < 0){
-  //  this.y *= -1
-  //}
 }
 
 Player.prototype.moveRight = function(){
   this.x += 10;
-  //if(this.x > this.ctx.canvas.height || this.x < 0){
-  //  this.x *= -1
-  //}
 }
 
 Player.prototype.moveDown = function(){
   this.y += 10;
-  //if(this.y > this.ctx.canvas.height || this.y < 0){
-  //  this.y *= -1
-  //}
 }
 
 Player.prototype.moveLeft = function(){
   this.x -= 10;
-  //if(this.x > this.ctx.canvas.height || this.x < 0){
-  //  this.x *= -1
-  //}
 }
