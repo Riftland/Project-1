@@ -3,6 +3,8 @@ function Player(ctx, keysPressed){
   this.keysPressed = keysPressed;
   this.x = Math.random() * 500;
   this.y = Math.random() * 500;
+  this.acc = 0.5;
+  this.mass = 30;
   this.vx = 0;
   this.vy = 0;
   this.radius = 30;
@@ -16,33 +18,40 @@ Player.prototype.draw = function(){
   this.ctx.closePath();
   this.ctx.fillStyle = this.color;
   this.ctx.fill();
+  console.log(this.vx, this.vy);
+  this.moveX(this.vx);
+  this.moveY(this.vy);
+}
+
+Player.prototype.moveX = function(vX){
+  this.x += vX;
+}
+
+Player.prototype.moveY = function(vY){
+  this.y += vY
 }
 
 Player.prototype.moveUp = function(){
-  if(this.vy < 10)this.vy += 1;
-  this.y -= this.vy;
+  this.vy = -10;
 }
 
 Player.prototype.moveRight = function(){
-  if(this.vx < 10)this.vx += 1;
-  this.x += this.vx;
+  this.vx = 10;
 }
 
 Player.prototype.moveDown = function(){
-  if(this.vy < 10)this.vy += 1;
-  this.y += this.vy;
+  this.vy = 10;
 }
 
 Player.prototype.moveLeft = function(){
-  if(this.vx < 10)this.vx += 1;
-  this.x -= this.vx;
+  this.vx = -10;
 }
 
 Player.prototype.dash = function(){
-  this.vx = 30;
-  this.vy = 30;
+  this.vx *= 2;
+  this.vy *= 2;
   setTimeout(function(){
-    this.vx = 10;
-    this.vy = 10;
-  }.bind(this), 200);
+    this.vx /= 2;
+    this.vy /= 2;
+  }.bind(this), 100);
 }

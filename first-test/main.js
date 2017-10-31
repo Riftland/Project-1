@@ -43,6 +43,7 @@ window.onload = function(){
 }
 
 function playerControls (keyPressed, player1, player2) {
+
   //Player 1
   if(keyPressed[87])player1.moveUp();
   if(keyPressed[83])player1.moveDown();
@@ -56,4 +57,5 @@ function playerControls (keyPressed, player1, player2) {
   if(keyPressed[39])player2.moveRight();
   if(keyPressed[37])player2.moveLeft();
   if(keyPressed[96])player2.dash();
+
 }
