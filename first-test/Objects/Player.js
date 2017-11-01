@@ -7,10 +7,12 @@ function Player(ctx, keysPressed){
   this.mass = 30;
   this.vx = 0;
   this.vy = 0;
+  this.tx = 0;
+  this.ty = 0;
   this.radius = 30;
   this.color = '#' + (Math.floor(Math.random() * 16581375)).toString(16);
   this.angle = 360;
-  this.speed = 10;
+  this.speed = 2;
 }
 
 Player.prototype.draw = function(){
@@ -32,19 +34,23 @@ Player.prototype.moveY = function(vY){
 }
 
 Player.prototype.moveUp = function(){
-  this.vy -= (this.radius * Math.cos(20))/this.speed;
+  this.vy -= this.speed;
+  //(this.radius * Math.cos(20))/this.speed;
 }
 
 Player.prototype.moveRight = function(){
-  this.vx += (this.radius * Math.cos(20))/this.speed;
+  this.vx += this.speed;
+  //(this.radius * Math.cos(20))/this.speed;
 }
 
 Player.prototype.moveDown = function(){
-  this.vy += (this.radius * Math.cos(20))/this.speed;
+  this.vy += this.speed;
+  //(this.radius * Math.cos(20))/this.speed;
 }
 
 Player.prototype.moveLeft = function(){
-  this.vx -= (this.radius * Math.cos(20))/this.speed;
+  this.vx -= this.speed;
+  //(this.radius * Math.cos(20))/this.speed;
 }
 
 Player.prototype.dash = function(){
