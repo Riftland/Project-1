@@ -1,12 +1,28 @@
 
-function Powerups(ball) {
+function Powerups(ctx, ball) {
+  this.ctx = ctx;
+  this.x = window.innerWidth / 2;
+  this.y = window.innerHeight / 2;
+  this.radius = 50;
+  this.color = "red";
+/*
   this.powers = [
     this.moreSpeed(ball),
     this.moreRadius(ball),
-    this.moreMass(ball)
+    this.moreMass(ball),
+    this.justMoreRadius(ball)
   ];
+  */
 }
 
+Powerups.prototype.draw = function(){
+  this.ctx.beginPath();
+  this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+  this.ctx.closePath();
+  this.ctx.fillStyle = this.color;
+  this.ctx.fill();
+}
+/*
 Powerups.prototype.moreSpeed = function(ball){
   var oldSpeed = 0.5;
   var newSpeed = 100;
@@ -39,3 +55,4 @@ Powerups.prototype.powerTime = function(nStat, ball){
     counter++;
   }, 1000);
 }
+*/

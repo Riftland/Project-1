@@ -1,7 +1,4 @@
 
-var player1Controls = [87, 83, 68, 65];
-var player2Controls = [38, 40, 39, 37];
-var player3Controls = [85, 74, 75, 72];
 
 window.onload = function(){
 
@@ -14,12 +11,13 @@ window.onload = function(){
   ctx.canvas.width = window.innerWidth;
   ctx.canvas.height = window.innerHeight;
   var players = [];
-  var player1 = new Player (ctx, keyPressed, player1Controls);
-  var player2 = new Player (ctx, keyPressed, player2Controls);
-  var player3 = new Player (ctx, keyPressed, player3Controls);
+  var player1 = new Player (ctx, keyPressed);
+  var player2 = new Player (ctx, keyPressed);
+  var player3 = new Player (ctx, keyPressed);
 
   //Make Board
   var board = new Board(ctx);
+
   //Make players list
   players.push(player1);
   players.push(player2);
@@ -28,15 +26,28 @@ window.onload = function(){
   //Initialize Game
   var game = new Game();
 
+  //Initialize Powerups
+  var powers = new Powerups(ctx);
+
   //Board Time!
+  var counter = 0;
+  //State for powerup aparition
+  var state = false;
   setInterval(function(){
     playerControls(keyPressed, player1, player2, player3);
-    board.update(players);
+    board.update(players, powers, state);
     for(var a = 0; a < players.length; a++){
       for(var b = a + 1; b < players.length; b++){
         game.isOverlapping(players[a], players[b]);
       }
+      if(state)state = game.catchPower(players[a], powers, state);
     }
+    //Siempre que el state esté true no debe contar
+    if(counter == 150){
+      state = true;
+      counter = 0;
+    }
+    if(!state)counter ++;
   }, 1000/24);
 
   //Métodos para coger las teclas en función de los jugadores

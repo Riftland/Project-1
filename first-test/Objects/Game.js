@@ -57,3 +57,17 @@ Game.prototype.collision = function(ball1, ball2){
 
   }
 }
+
+Game.prototype.catchPower = function(ball, power, state){
+
+  if(ball.x + ball.radius > power.x
+  && ball.x < power.x + ball.radius + power.radius
+  && ball.y + ball.radius + power.radius > power.y
+  && ball.y < power.y + ball.radius + power.radius){
+    console.log("Cogido!");
+    return false;
+  } else{
+    return true;
+  }
+
+}

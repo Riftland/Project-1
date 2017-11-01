@@ -15,7 +15,7 @@ Board.prototype.drawBoard = function(){
   this.ctx.fill();
 }
 
-Board.prototype.update = function(players){
+Board.prototype.update = function(players, powers, state){
   this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   if(this.radius >= 0){
     this.drawBoard();
@@ -24,4 +24,5 @@ Board.prototype.update = function(players){
   players.forEach(function(e){
     e.draw();
   })
+  if(state)powers.draw();
 }
