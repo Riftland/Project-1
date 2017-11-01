@@ -23,13 +23,17 @@ window.onload = function(){
   players.push(player2);
 
   //Initialize Game
-  var game = new Game(players);
+  var game = new Game();
 
   //Board Time!
   setInterval(function(){
     playerControls(keyPressed, player1, player2);
     board.update(players);
-    game.isOverlapping();
+    for(var a = 0; a < players.length; a++){
+      for(var b = a + 1; b < players.length; b++){
+        game.isOverlapping(players[a], players[b]);
+      }
+    }
   }, 1000/24);
 
   //Métodos para coger las teclas en función de los jugadores

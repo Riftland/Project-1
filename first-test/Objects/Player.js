@@ -3,16 +3,15 @@ function Player(ctx, keysPressed){
   this.keysPressed = keysPressed;
   this.x = Math.random() * 500;
   this.y = Math.random() * 500;
-  this.acc = 0.5;
-  this.mass = 30;
+  //this.acc = 0.5;
+  this.radius = 30;
+  this.mass = this.radius * 0.5;
   this.vx = 0;
   this.vy = 0;
   this.tx = 0;
   this.ty = 0;
-  this.radius = 30;
   this.color = '#' + (Math.floor(Math.random() * 16581375)).toString(16);
-  this.angle = 360;
-  this.speed = 2;
+  this.speed = 0.5;
 }
 
 Player.prototype.draw = function(){
