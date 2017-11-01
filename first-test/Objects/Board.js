@@ -2,9 +2,9 @@ function Board(ctx) {
   this.ctx = ctx;
   this.x = 930;
   this.y = 500;
-  this.radius = window.innerHeight / 2.1;
+  this.radius = 1000;//window.innerHeight / 2.1;
   this.end = Math.PI * 2;
-  this.color = 'lightblue';
+  this.color = "#ccffff";
 }
 
 Board.prototype.drawBoard = function(){

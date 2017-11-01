@@ -1,15 +1,12 @@
 function Player(ctx, keysPressed){
   this.ctx = ctx;
   this.keysPressed = keysPressed;
-  this.x = Math.random() * 500;
-  this.y = Math.random() * 500;
-  //this.acc = 0.5;
+  this.x = Math.random() * 1000;
+  this.y = Math.random() * 1000;
   this.radius = 30;
   this.mass = this.radius * 0.5;
   this.vx = 0;
   this.vy = 0;
-  this.tx = 0;
-  this.ty = 0;
   this.color = '#' + (Math.floor(Math.random() * 16581375)).toString(16);
   this.speed = 0.5;
 }
@@ -34,22 +31,18 @@ Player.prototype.moveY = function(vY){
 
 Player.prototype.moveUp = function(){
   this.vy -= this.speed;
-  //(this.radius * Math.cos(20))/this.speed;
 }
 
 Player.prototype.moveRight = function(){
   this.vx += this.speed;
-  //(this.radius * Math.cos(20))/this.speed;
 }
 
 Player.prototype.moveDown = function(){
   this.vy += this.speed;
-  //(this.radius * Math.cos(20))/this.speed;
 }
 
 Player.prototype.moveLeft = function(){
   this.vx -= this.speed;
-  //(this.radius * Math.cos(20))/this.speed;
 }
 
 Player.prototype.dash = function(){

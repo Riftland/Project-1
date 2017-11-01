@@ -8,7 +8,7 @@ Game.prototype.isOverlapping = function(ball1, ball2){
   && ball1.y < ball2.y + ball1.radius + ball2.radius){
 
     this.collision(ball1, ball2);
-    
+
   }
 }
 
@@ -55,4 +55,5 @@ Game.prototype.collision = function(ball1, ball2){
     ball2.vx = Math.cos(aTheta) * evx2 + Math.cos(aTheta + Math.PI / 2) * evy2;
     ball2.vy = Math.sin(aTheta) * evx2 + Math.sin(aTheta + Math.PI / 2) * evy2;
 
+  }
 }
