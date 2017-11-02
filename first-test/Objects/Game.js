@@ -125,7 +125,7 @@ Game.prototype.catchPower = function(ball, power, state){
   && ball.x < power.x + ball.radius + power.radius
   && ball.y + ball.radius + power.radius > power.y
   && ball.y < power.y + ball.radius + power.radius){
-    power.choosePower(~~(Math.random() * 4), ball);
+    power.choosePower(~~(Math.random() * 5), ball);
     return false;
   } else{
     return true;

@@ -20,6 +20,7 @@ Powerups.prototype.choosePower = function(n, ball){
   this.powers = [
     this.moreSpeed,
     this.moreRadius,
+    this.lessRadius,
     this.moreMass,
     this.justMoreRadius
   ];
@@ -28,43 +29,41 @@ Powerups.prototype.choosePower = function(n, ball){
 }
 
 Powerups.prototype.moreSpeed = function(ball){
-  var oldSpeed = 0.5;
-  var newSpeed = 3;
-  ball.speed = ball.speed * newSpeed;
-  this.powerTime;
-  console.log(ball.speed);
+  ball.speed = ball.speed * 3;
+  game.powers.powerTime(ball);
 }
 
 Powerups.prototype.moreRadius = function(ball){
-  var oldRadius = 30;
-  var newRadius = 200;
-  ball.radius = newRadius;
-  this.powerTime;
-  console.log(ball.radius);
+  ball.radius = 250;
+  game.powers.powerTime(ball);
+}
+
+Powerups.prototype.lessRadius = function(ball){
+  ball.radius = 5;
+  game.powers.powerTime(ball);
 }
 
 Powerups.prototype.moreMass = function(ball){
-  var oldMass = ball.radius * 0.5;
-  var newMass = 500;
-  ball.mass = newMass;
-  this.powerTime;
-  console.log(ball.mass);
+  ball.mass = 500;
+  game.powers.powerTime(ball);
 }
 
 Powerups.prototype.justMoreRadius = function(ball){
-  var oldRadius = 30;
-  var newRadius = 250;
-  ball.mass = oldRadius * 0.5;
-  ball.radius = newRadius;
-  this.powerTime;
-  console.log(ball.mass, ball.radius);
+  ball.mass = 30 * 0.5;
+  ball.radius = 250;
+  game.powers.powerTime(ball);
 }
 
-Powerups.prototype.powerTime = function(){
+Powerups.prototype.powerTime = function(ball){
   var counter = 0;
-  console.log("hola1");
+  console.log(ball);
   var t = setInterval(function(){
-    if(counter == 6)clearInterval(t); console.log("hola");
+    if(counter == 6){
+      ball.speed = ball.speed * 0.5;
+      ball.radius = 30;
+      ball.mass = ball.radius * 0.5;
+      clearInterval(t);
+    }
     counter++;
-  }, 1000);
+  }.bind(this), 1000);
 }

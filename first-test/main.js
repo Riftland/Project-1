@@ -1,6 +1,6 @@
 var keyPressed = {};
-var players = [];
 var ctx;
+var game;
 window.onload = function(){
   //Create Canvas
   var canvas = document.getElementById('tutorial');
@@ -9,7 +9,7 @@ window.onload = function(){
   ctx.canvas.height = window.innerHeight;
 
   //Start the game!
-  var game = new Game();
+ game  = new Game();
   game.start();
 
   //Capture keydown and keyup
