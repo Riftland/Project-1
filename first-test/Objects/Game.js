@@ -1,4 +1,65 @@
-function Game() {}
+function Game() {
+  this.board = new Board(ctx);
+  this.powers = new Powerups(ctx);
+  this.players = [
+    new Player (ctx, keyPressed),
+    new Player (ctx, keyPressed),
+    new Player (ctx, keyPressed)
+  ];
+}
+
+Game.prototype.start = function(){
+
+  var counter = 0;
+  var state = false;
+  setInterval(function(){
+    this.playerControls(keyPressed, this.players[0], this.players[1], this.players[2]);
+    this.board.update(this.players, this.powers, state);
+    for(var a = 0; a < this.players.length; a++){
+      for(var b = a + 1; b < this.players.length; b++){
+        this.isOverlapping(this.players[a], this.players[b]);
+      }
+      this.removePlayer(this.players[a], this.board);
+      if(this.players[a].lifes == 0)this.players.splice(a, 1);
+      if(state)state = this.catchPower(this.players[a], this.powers, state);
+    }
+    //When state is true, counter not count
+    if(counter == 150){
+      state = true;
+      counter = 0;
+    }
+    if(!state)counter ++;
+
+    //Check if someone wins
+    this.endGame(this.players);
+  }.bind(this), 1000/24);
+
+}
+
+Game.prototype.playerControls = function(keyPressed, player1, player2, player3) {
+
+  //Player 1
+  if(keyPressed[87])player1.moveUp();
+  if(keyPressed[83])player1.moveDown();
+  if(keyPressed[68])player1.moveRight();
+  if(keyPressed[65])player1.moveLeft();
+  if(keyPressed[32])player1.dash();
+
+  //Player 2
+  if(keyPressed[38])player2.moveUp();
+  if(keyPressed[40])player2.moveDown();
+  if(keyPressed[39])player2.moveRight();
+  if(keyPressed[37])player2.moveLeft();
+  if(keyPressed[96])player2.dash();
+
+  //Player 3
+  if(keyPressed[85])player3.moveUp();
+  if(keyPressed[74])player3.moveDown();
+  if(keyPressed[75])player3.moveRight();
+  if(keyPressed[72])player3.moveLeft();
+  if(keyPressed[76])player3.dash();
+
+}
 
 Game.prototype.isOverlapping = function(ball1, ball2){
 
@@ -64,10 +125,33 @@ Game.prototype.catchPower = function(ball, power, state){
   && ball.x < power.x + ball.radius + power.radius
   && ball.y + ball.radius + power.radius > power.y
   && ball.y < power.y + ball.radius + power.radius){
-    console.log("Cogido!");
+    power.choosePower(~~(Math.random() * 4), ball);
     return false;
   } else{
     return true;
   }
 
+}
+
+Game.prototype.removePlayer = function(ball, board){
+  if(ball.x + ball.radius / 2 > board.width
+  || ball.x + ball.radius * 2 < board.x
+  || ball.y + ball.radius * 2 > board.height
+  || ball.y + ball.radius * 2 < board.y){
+    ball.lifes--;
+    if(ball.lifes > 0){
+      ball.x = Math.random() * (1000 - 200) + 200;
+      ball.y = Math.random() * (1000 - 200) + 200;
+      ball.vx = 0;
+      ball.vy = 0;
+    }
+  }
+}
+
+Game.prototype.endGame = function(players){
+  if(players.length == 1){
+    alert(players[0].color + " winner!");
+  } else if(players.length == 0){
+    alert("Game over!");
+  }
 }

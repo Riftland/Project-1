@@ -7,6 +7,7 @@ function Player(ctx, keysPressed){
   this.mass = this.radius * 0.5;
   this.vx = 0;
   this.vy = 0;
+  this.lifes = 3;
   this.color = '#' + (Math.floor(Math.random() * 16581375)).toString(16);
   this.speed = 0.5;
 }
