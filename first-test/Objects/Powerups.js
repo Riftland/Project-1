@@ -1,15 +1,15 @@
 
 function Powerups(ctx) {
   this.ctx = ctx;
-  this.x = window.innerWidth / 2;
-  this.y = window.innerHeight / 2;
+  this.x = Math.random() * (window.innerWidth - 300) + 300;
+  this.y = Math.random() * (window.innerHeight - 300) + 300;
   this.radius = 100;
   this.imgP = new Image();
   this.imgP.src = "./img/powerup.png";
 };
 
 Powerups.prototype.draw = function(){
-  this.ctx.drawImage(this.imgP, window.innerWidth / 2 + 10, window.innerHeight / 2 + 10, 100, 100);
+  this.ctx.drawImage(this.imgP, this.x + 10, this.y + 10, 100, 100);
 };
 
 Powerups.prototype.choosePower = function(n, ball){

@@ -1,8 +1,10 @@
 var keyPressed = {};
+var marcadores = [0, 0];
 var c1 = "red";
 var c2 = "green";
 //var c3 = "blue";
 var game;
+var ctx;
 window.onload = function(){
   //Create Canvas
   var canvas = document.getElementById('tutorial');
