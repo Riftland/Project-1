@@ -46,18 +46,18 @@ Game.prototype.playerControls = function(keyPressed, player1, player2) {
   if(keyPressed[32])player1.dash();
 
   //Player 2
-  //if(keyPressed[38])player2.moveUp();
-  //if(keyPressed[40])player2.moveDown();
-  //if(keyPressed[39])player2.moveRight();
-  //if(keyPressed[37])player2.moveLeft();
-  //if(keyPressed[96])player2.dash();
+  if(keyPressed[38])player2.moveUp();
+  if(keyPressed[40])player2.moveDown();
+  if(keyPressed[39])player2.moveRight();
+  if(keyPressed[37])player2.moveLeft();
+  if(keyPressed[96])player2.dash();
 
   //Player 2
-  if(keyPressed[85])player2.moveUp();
-  if(keyPressed[74])player2.moveDown();
-  if(keyPressed[75])player2.moveRight();
-  if(keyPressed[72])player2.moveLeft();
-  if(keyPressed[76])player2.dash();
+  //if(keyPressed[85])player2.moveUp();
+  //if(keyPressed[74])player2.moveDown();
+  //if(keyPressed[75])player2.moveRight();
+  //if(keyPressed[72])player2.moveLeft();
+  //if(keyPressed[76])player2.dash();
 
 };
 
@@ -67,22 +67,30 @@ Game.prototype.isOverlapping = function(ball1, ball2){
   && ball1.x < ball2.x + ball1.radius + ball2.radius
   && ball1.y + ball1.radius + ball2.radius > ball2.y
   && ball1.y < ball2.y + ball1.radius + ball2.radius){
-    var snd = new Audio("./sound/boing.m4a");
-    snd.play();
+
     this.collision(ball1, ball2);
   }
 };
 
 Game.prototype.collision = function(ball1, ball2){
 
+  var snd = new Audio("./sound/scream.m4a");
+  snd.play();
+
+  //Valores delta de posiciones x e y
   var dx = ball1.x - ball2.x;
   var dy = ball1.y - ball2.y;
 
+  //Suma de los cuadrados de dichos deltas
   var len = (dx * dx) + (dy * dy);
 
+  //Suma de los radios
   var min = ball1.radius + ball2.radius;
+
+  //Delta de dichos radios
   var minDelta = min * min;
 
+  //Arcotangente de las posiciones delta
   var aTheta = Math.atan2(dy, dx);
 
   if(len < minDelta){
@@ -95,22 +103,27 @@ Game.prototype.collision = function(ball1, ball2){
     ball2.x += dx * fact * 0.5;
     ball2.y += dy * fact * 0.5;
 
+    //Pitágoras (Raíz de la suma de los cuadrados)
     var v1 = Math.sqrt(Math.pow(ball1.vx, 2) + Math.pow(ball1.vy, 2));
     var v2 = Math.sqrt(Math.pow(ball2.vx, 2) + Math.pow(ball2.vy, 2));
 
+    //Arcotangente de las posiciones
     var a1 = Math.atan2(ball1.vy, ball1.vx);
     var a2 = Math.atan2(ball2.vy, ball2.vx);
 
+    //Producto de pitágoras por coseno y seno de la sustracción del arcotangente delta anterior al arcotante de las posiciones
     var rvx1 = v1 * Math.cos(a1 - aTheta);
     var rvy1 = v1 * Math.sin(a1 - aTheta);
     var rvx2 = v2 * Math.cos(a2 - aTheta);
     var rvy2 = v2 * Math.sin(a2 - aTheta);
 
+    //Se incluyen las masas a las operaciones
     var evx1 = ((ball1.mass - ball2.mass) * rvx1 + (ball2.mass + ball2.mass) * rvx2) / (ball1.mass + ball2.mass);
     var evx2 = ((ball1.mass + ball1.mass) * rvx1 + (ball2.mass - ball1.mass) * rvx2) / (ball1.mass + ball2.mass);
     var evy1 = rvy1;
     var evy2 = rvy2;
 
+    //Posición final
     ball1.vx = Math.cos(aTheta) * evx1 + Math.cos(aTheta + Math.PI / 2) * evy1;
     ball1.vy = Math.sin(aTheta) * evx1 + Math.sin(aTheta + Math.PI / 2) * evy1;
     ball2.vx = Math.cos(aTheta) * evx2 + Math.cos(aTheta + Math.PI / 2) * evy2;
@@ -134,10 +147,10 @@ Game.prototype.catchPower = function(ball, power, state){
 };
 
 Game.prototype.removePlayer = function(ball, board){
-  if(ball.x + ball.radius > board.width + 70
-  || ball.x + ball.radius < board.x
-  || ball.y + ball.radius > board.height + 70
-  || ball.y + ball.radius < board.y){
+  if(ball.x + ball.radius > board.width + 500
+  || ball.x + ball.radius < board.x - 500
+  || ball.y + ball.radius > board.height + 500
+  || ball.y + ball.radius < board.y - 500){
     var snd = new Audio("./sound/boo.m4a");
     snd.play();
     ball.lifes--;
@@ -152,17 +165,24 @@ Game.prototype.removePlayer = function(ball, board){
 
 Game.prototype.endGame = function(players){
   if(players.length == 1){
-    //One player winner
     var player = players[0];
     var counter = 0;
     var snd = new Audio("./sound/kabuki-yoo.m4a");
     var t = setInterval(function(){
       if(counter == 9){
-        alert(player.color + " winner!");
+        player.color == "red" ? marcadores[0]++ : marcadores[1]++;
+        console.log(marcadores);
+        alert(player.color + " winner!\n\n" + "Marcador - Red: " + marcadores[0] + " | Green: " + marcadores[1]);
+        game.repeat();
       }
       counter ++;
     }, 1000);
     snd.play();
     players.splice(0);
   }
+};
+
+Game.prototype.repeat = function(){
+  this.players.push(new Player (ctx, keyPressed, c1),
+  new Player (ctx, keyPressed, c2));
 };
