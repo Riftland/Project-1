@@ -1,7 +1,7 @@
 var keyPressed = {};
 var c1 = "red";
 var c2 = "green";
-var c3 = "blue";
+//var c3 = "blue";
 var game;
 window.onload = function(){
   //Create Canvas

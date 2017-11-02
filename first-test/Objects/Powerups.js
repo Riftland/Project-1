@@ -9,7 +9,7 @@ function Powerups(ctx) {
 };
 
 Powerups.prototype.draw = function(){
-  this.ctx.drawImage(this.imgP, window.innerWidth / 2 + 20, window.innerHeight / 2 + 20, 100, 100);
+  this.ctx.drawImage(this.imgP, window.innerWidth / 2 + 10, window.innerHeight / 2 + 10, 100, 100);
 };
 
 Powerups.prototype.choosePower = function(n, ball){

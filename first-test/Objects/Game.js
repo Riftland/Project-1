@@ -3,8 +3,8 @@ function Game(ctx) {
   this.powers = new Powerups(ctx);
   this.players = [
     new Player (ctx, keyPressed, c1),
-    new Player (ctx, keyPressed, c2),
-    new Player (ctx, keyPressed, c3)
+    new Player (ctx, keyPressed, c2)
+    //new Player (ctx, keyPressed, c3)
   ];
 };
 
@@ -36,7 +36,7 @@ Game.prototype.start = function(){
 
 };
 
-Game.prototype.playerControls = function(keyPressed, player1, player2, player3) {
+Game.prototype.playerControls = function(keyPressed, player1, player2) {
 
   //Player 1
   if(keyPressed[87])player1.moveUp();
@@ -46,18 +46,18 @@ Game.prototype.playerControls = function(keyPressed, player1, player2, player3) 
   if(keyPressed[32])player1.dash();
 
   //Player 2
-  if(keyPressed[38])player2.moveUp();
-  if(keyPressed[40])player2.moveDown();
-  if(keyPressed[39])player2.moveRight();
-  if(keyPressed[37])player2.moveLeft();
-  if(keyPressed[96])player2.dash();
+  //if(keyPressed[38])player2.moveUp();
+  //if(keyPressed[40])player2.moveDown();
+  //if(keyPressed[39])player2.moveRight();
+  //if(keyPressed[37])player2.moveLeft();
+  //if(keyPressed[96])player2.dash();
 
-  //Player 3
-  if(keyPressed[85])player3.moveUp();
-  if(keyPressed[74])player3.moveDown();
-  if(keyPressed[75])player3.moveRight();
-  if(keyPressed[72])player3.moveLeft();
-  if(keyPressed[76])player3.dash();
+  //Player 2
+  if(keyPressed[85])player2.moveUp();
+  if(keyPressed[74])player2.moveDown();
+  if(keyPressed[75])player2.moveRight();
+  if(keyPressed[72])player2.moveLeft();
+  if(keyPressed[76])player2.dash();
 
 };
 
@@ -67,9 +67,9 @@ Game.prototype.isOverlapping = function(ball1, ball2){
   && ball1.x < ball2.x + ball1.radius + ball2.radius
   && ball1.y + ball1.radius + ball2.radius > ball2.y
   && ball1.y < ball2.y + ball1.radius + ball2.radius){
-
+    var snd = new Audio("./sound/boing.m4a");
+    snd.play();
     this.collision(ball1, ball2);
-    console.log("collision!");
   }
 };
 
@@ -138,7 +138,8 @@ Game.prototype.removePlayer = function(ball, board){
   || ball.x + ball.radius < board.x
   || ball.y + ball.radius > board.height + 70
   || ball.y + ball.radius < board.y){
-    console.log(ball.x + ball.radius, board.width, board.height);
+    var snd = new Audio("./sound/boo.m4a");
+    snd.play();
     ball.lifes--;
     if(ball.lifes > 0){
       ball.x = Math.random() * (1000 - 200) + 200;
@@ -151,8 +152,17 @@ Game.prototype.removePlayer = function(ball, board){
 
 Game.prototype.endGame = function(players){
   if(players.length == 1){
-    alert(players[0].color + " winner!");
-  } else if(players.length == 0){
-    alert("Game over!");
+    //One player winner
+    var player = players[0];
+    var counter = 0;
+    var snd = new Audio("./sound/kabuki-yoo.m4a");
+    var t = setInterval(function(){
+      if(counter == 9){
+        alert(player.color + " winner!");
+      }
+      counter ++;
+    }, 1000);
+    snd.play();
+    players.splice(0);
   }
 };
