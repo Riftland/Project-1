@@ -1,5 +1,7 @@
 var keyPressed = {};
-var ctx;
+var c1 = "red";
+var c2 = "green";
+var c3 = "blue";
 var game;
 window.onload = function(){
   //Create Canvas
@@ -9,15 +11,15 @@ window.onload = function(){
   ctx.canvas.height = window.innerHeight;
 
   //Start the game!
- game  = new Game();
+  game  = new Game(ctx);
   game.start();
 
   //Capture keydown and keyup
   document.onkeydown = function(e){
     keyPressed[e.keyCode] = true;
-  }
+  };
 
   document.onkeyup = function(e){
     delete keyPressed[e.keyCode];
-  }
-}
+  };
+};

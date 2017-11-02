@@ -3,17 +3,14 @@ function Powerups(ctx) {
   this.ctx = ctx;
   this.x = window.innerWidth / 2;
   this.y = window.innerHeight / 2;
-  this.radius = 50;
-  this.color = "red";
-}
+  this.radius = 100;
+  this.imgP = new Image();
+  this.imgP.src = "./img/powerup.png";
+};
 
 Powerups.prototype.draw = function(){
-  this.ctx.beginPath();
-  this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-  this.ctx.closePath();
-  this.ctx.fillStyle = this.color;
-  this.ctx.fill();
-}
+  this.ctx.drawImage(this.imgP, window.innerWidth / 2 + 20, window.innerHeight / 2 + 20, 100, 100);
+};
 
 Powerups.prototype.choosePower = function(n, ball){
 
@@ -26,33 +23,33 @@ Powerups.prototype.choosePower = function(n, ball){
   ];
 
   this.powers[n](ball);
-}
+};
 
 Powerups.prototype.moreSpeed = function(ball){
   ball.speed = ball.speed * 3;
   game.powers.powerTime(ball);
-}
+};
 
 Powerups.prototype.moreRadius = function(ball){
   ball.radius = 250;
   game.powers.powerTime(ball);
-}
+};
 
 Powerups.prototype.lessRadius = function(ball){
   ball.radius = 5;
   game.powers.powerTime(ball);
-}
+};
 
 Powerups.prototype.moreMass = function(ball){
   ball.mass = 500;
   game.powers.powerTime(ball);
-}
+};
 
 Powerups.prototype.justMoreRadius = function(ball){
   ball.mass = 30 * 0.5;
   ball.radius = 250;
   game.powers.powerTime(ball);
-}
+};
 
 Powerups.prototype.powerTime = function(ball){
   var counter = 0;
@@ -66,4 +63,4 @@ Powerups.prototype.powerTime = function(ball){
     }
     counter++;
   }.bind(this), 1000);
-}
+};

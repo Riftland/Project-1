@@ -1,12 +1,12 @@
-function Game() {
+function Game(ctx) {
   this.board = new Board(ctx);
   this.powers = new Powerups(ctx);
   this.players = [
-    new Player (ctx, keyPressed),
-    new Player (ctx, keyPressed),
-    new Player (ctx, keyPressed)
+    new Player (ctx, keyPressed, c1),
+    new Player (ctx, keyPressed, c2),
+    new Player (ctx, keyPressed, c3)
   ];
-}
+};
 
 Game.prototype.start = function(){
 
@@ -24,7 +24,7 @@ Game.prototype.start = function(){
       if(state)state = this.catchPower(this.players[a], this.powers, state);
     }
     //When state is true, counter not count
-    if(counter == 150){
+    if(counter == 300){
       state = true;
       counter = 0;
     }
@@ -34,7 +34,7 @@ Game.prototype.start = function(){
     this.endGame(this.players);
   }.bind(this), 1000/24);
 
-}
+};
 
 Game.prototype.playerControls = function(keyPressed, player1, player2, player3) {
 
@@ -59,7 +59,7 @@ Game.prototype.playerControls = function(keyPressed, player1, player2, player3) 
   if(keyPressed[72])player3.moveLeft();
   if(keyPressed[76])player3.dash();
 
-}
+};
 
 Game.prototype.isOverlapping = function(ball1, ball2){
 
@@ -69,9 +69,9 @@ Game.prototype.isOverlapping = function(ball1, ball2){
   && ball1.y < ball2.y + ball1.radius + ball2.radius){
 
     this.collision(ball1, ball2);
-
+    console.log("collision!");
   }
-}
+};
 
 Game.prototype.collision = function(ball1, ball2){
 
@@ -117,7 +117,7 @@ Game.prototype.collision = function(ball1, ball2){
     ball2.vy = Math.sin(aTheta) * evx2 + Math.sin(aTheta + Math.PI / 2) * evy2;
 
   }
-}
+};
 
 Game.prototype.catchPower = function(ball, power, state){
 
@@ -131,13 +131,14 @@ Game.prototype.catchPower = function(ball, power, state){
     return true;
   }
 
-}
+};
 
 Game.prototype.removePlayer = function(ball, board){
-  if(ball.x + ball.radius / 2 > board.width
-  || ball.x + ball.radius * 2 < board.x
-  || ball.y + ball.radius * 2 > board.height
-  || ball.y + ball.radius * 2 < board.y){
+  if(ball.x + ball.radius > board.width + 70
+  || ball.x + ball.radius < board.x
+  || ball.y + ball.radius > board.height + 70
+  || ball.y + ball.radius < board.y){
+    console.log(ball.x + ball.radius, board.width, board.height);
     ball.lifes--;
     if(ball.lifes > 0){
       ball.x = Math.random() * (1000 - 200) + 200;
@@ -146,7 +147,7 @@ Game.prototype.removePlayer = function(ball, board){
       ball.vy = 0;
     }
   }
-}
+};
 
 Game.prototype.endGame = function(players){
   if(players.length == 1){
@@ -154,4 +155,4 @@ Game.prototype.endGame = function(players){
   } else if(players.length == 0){
     alert("Game over!");
   }
-}
+};
