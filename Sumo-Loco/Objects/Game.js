@@ -6,6 +6,7 @@ function Game(ctx) {
     new Player (ctx, keyPressed, c2)
     //new Player (ctx, keyPressed, c3)
   ];
+  this.sounds = new Sounds();
 };
 
 Game.prototype.start = function(){
@@ -74,8 +75,7 @@ Game.prototype.isOverlapping = function(ball1, ball2){
 
 Game.prototype.collision = function(ball1, ball2){
 
-  var snd = new Audio("./sound/scream.m4a");
-  snd.play();
+  this.sounds.play(4);
 
   //Valores delta de posiciones x e y
   var dx = ball1.x - ball2.x;
@@ -151,8 +151,9 @@ Game.prototype.removePlayer = function(ball, board){
   || ball.x + ball.radius < board.x - 500
   || ball.y + ball.radius > board.height + 500
   || ball.y + ball.radius < board.y - 500){
-    var snd = new Audio("./sound/boo.m4a");
-    snd.play();
+
+    this.sounds.play(0);
+
     ball.lifes--;
     if(ball.lifes > 0){
       ball.x = Math.random() * (1000 - 200) + 200;
@@ -167,17 +168,15 @@ Game.prototype.endGame = function(players){
   if(players.length == 1){
     var player = players[0];
     var counter = 0;
-    var snd = new Audio("./sound/kabuki-yoo.m4a");
     var t = setInterval(function(){
       if(counter == 9){
         player.color == "red" ? marcadores[0]++ : marcadores[1]++;
-        console.log(marcadores);
         alert(player.color + " winner!\n\n" + "Marcador - Red: " + marcadores[0] + " | Green: " + marcadores[1]);
         game.repeat();
       }
       counter ++;
     }, 1000);
-    snd.play();
+    this.sounds.play(2);
     players.splice(0);
   }
 };
